@@ -11,7 +11,7 @@ app.use(express.json())//handle json data
 app.use(express.urlencoded({extend: false}))//handle data through url
 app.use(bodyParser.json());//helps to parse data from front-end to backend
 //Routes
-app.get("/",()=>(req,res)=>{
+app.get("/",(req,res)=>{
   res.send("Home Page");
 })
 //Connect mongoDb
@@ -19,7 +19,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(()=>{
     app.listen(PORT,()=>{
-        console.log('Server Running on port '+PORT)
+        console.log('Server Running on port '+PORT);
     })
   }) 
   .catch((err)=>console.log(err))  
