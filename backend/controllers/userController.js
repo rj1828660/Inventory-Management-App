@@ -195,7 +195,7 @@ const forgotPassword=asyncHandler(async(req,res)=>{
     }
     //Create reset Token
     let resetToken=crypto.randomBytes(32).toString("hex")+user._id;
-    console.log("resetToken:"+resetToken);
+   // console.log("resetToken:"+resetToken);
     //Hash token before saving to db
     const hashedToken=crypto.createHash("sha256").update(resetToken).digest("hex");
     //console.log(hashedToken);
@@ -210,7 +210,7 @@ const forgotPassword=asyncHandler(async(req,res)=>{
     //construct Reset url
     const resetUrl=`${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
     //Reset Email
-    console.log(resetUrl);
+    //console.log(resetUrl);
     const message= `<h2>Hello ${user.name}</h2>
     <p>Please use url below to reset your password</p>
     <p>reset link is valid for only 30 minutes</p>
@@ -258,6 +258,7 @@ const resetPassword=asyncHandler(async(req,res)=>{
     await user.save();
     res.status(200).json({message:"Password Reset Successful, Please login"})
 });
+
 module.exports={
     registerUser,
     loginUser,
