@@ -17,6 +17,10 @@ app.use(express.json())//handle json data
 app.use(express.urlencoded({extend: false}))//handle data through url
 app.use(bodyParser.json());//helps to parse data from front-end to backend
 app.use("/uploads",express.static(path.join(__dirname,"uploads")));
+app.use(cors({
+  origin:["http://localhost:3000","https://inventoryManagementApp.vercel.app"],
+  Credentials:true,
+}))
 //Route Middleware
 app.use("/api/users",userRoute);
 app.use("/api/products",productRoute);
