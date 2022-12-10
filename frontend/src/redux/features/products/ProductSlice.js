@@ -12,7 +12,7 @@ const initialState = {
 }
 
 //create New Product
-const createProduct=createAsyncThunk(
+ export const createProduct=createAsyncThunk(
     "products/create",
     async(formData,thunkAPI)=>{
         try{
@@ -24,6 +24,21 @@ const createProduct=createAsyncThunk(
         }
     }
 )
+//get all products
+export const getProducts=createAsyncThunk(
+  "products/getAll",
+  async(_,thunkAPI)=>{
+      try{
+         return await productService.getProducts();
+      }catch(error){
+          const message=(error.response&&error.response.data&&error.response.data.message)||error.message||error.toString();
+          console.log(message);
+          return thunkAPI.rejectWithValue(message);
+      }
+  }
+)
+
+
 const ProductSlice = createSlice({
   name:"product",
   initialState,
@@ -32,7 +47,8 @@ const ProductSlice = createSlice({
         console.log("store value")
     },
     extrareducers:(builder)=>{
-     builder.addCase(createProduct.pending,(state)=>{
+     builder
+     .addCase(createProduct.pending,(state)=>{
         state.isLoading=true
      })
      .addCase(createProduct.fulfilled,(state,action)=>{
@@ -50,13 +66,30 @@ const ProductSlice = createSlice({
         state.message=action.payload
         
         toast.error(action.payload)
-
-        
     })
+    .addCase(getProducts.pending,(state)=>{
+      state.isLoading=true
+   })
+   .addCase(getProducts.fulfilled,(state,action)=>{
+      state.isLoading=false;
+      state.isSuccess=true;
+      state.isError=false;
+      console.log(action.payload);
+      state.products=action.payload;
+   })
+  .addCase(createProduct.rejected,(state,action)=>{
+      state.isLoading=false;
+      state.isError=true;
+      state.message=action.payload
+      toast.error(action.payload)
+   })
+
     }
   }
 });
 
 export const {CALC_STORE_VALUE} = ProductSlice.actions
+
+export const selectIsLoading=(state)=>state.product.isLoading;
 
 export default ProductSlice.reducer

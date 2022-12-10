@@ -8,8 +8,14 @@ const API_URL=`${BACKEND_URL}/api/products`
     const response=await axios.post(API_URL,formData)
     return response.data;
 };
+//gets All Products
 
+const getProducts=async()=>{
+    const response=await axios.get(API_URL)
+    return response.data;
+};
 const productService={
-    createProduct
+    createProduct,
+    getProducts
 }
 export default productService
