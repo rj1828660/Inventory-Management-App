@@ -25,7 +25,7 @@ const authSlice = createSlice({
       localStorage.setItem("name",JSON.stringify(action.payload))
       state.name=action.payload
     },
-    SET_USER(state,action){
+    SET_USER(state,action){ 
        const profile=action.payload
        state.user.name=profile.name
        state.user.email=profile.email

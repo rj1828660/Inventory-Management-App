@@ -79,3 +79,14 @@ export const getLoginStatus=async(userData,resetToken)=>{
          
     }
 }
+    //get user Profile
+export const getUser=async()=>{
+    try{
+       const response=await axios.get(`${BACKEND_URL}/api/users/getUser`,{withCredentials:true});
+       return response.data; 
+    }catch(error){
+        const message=(error.response&&error.response.data&&error.response.data.message)||error.message||error.toString();
+            toast.error(message);
+         
+    }
+}
